@@ -12,7 +12,7 @@ const typeDefs = gql`
 
   type Message {
     _id: ID
-    name: String
+    userName: String
     email: String!
     messageText: String
     createdAt: String
@@ -39,10 +39,6 @@ const typeDefs = gql`
     user: User
   }
 
-  type Message {
-
-  }
-
   type Query {
     me: User
     users: [User]
@@ -50,7 +46,7 @@ const typeDefs = gql`
     thoughts(username: String): [Thought]
     thought(_id: ID!): Thought
     messages: [Message]
-    message(email: String): Message
+    message(_id: ID!): Message
   }
 
   type Mutation {
@@ -59,7 +55,7 @@ const typeDefs = gql`
     addThought(thoughtText: String!): Thought
     addReaction(thoughtId: ID!, reactionBody: String!): Thought
     addFriend(friendId: ID!): User
-    addMessage(name: String, email: String!, messageText: String): Message
+    addMessage(userName: String, email: String!, messageText: String): Message
   }
 `;
 

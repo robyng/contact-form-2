@@ -4,6 +4,9 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
+    messages: async () => {
+      return Message.find().sort({ createdAt: -1});
+    },
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })

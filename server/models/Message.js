@@ -4,7 +4,7 @@ const dateFormat = require('../utils/dateFormat');
 
 const messageSchema = new Schema(
   {
-    name: {
+    userName: {
       type: String,
       required: false,
       unique: false,

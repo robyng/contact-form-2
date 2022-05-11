@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
+// import { LOGIN_USER } from '../utils/mutations';
+import { ADD_MESSAGE } from "../utils/mutations";
 
-import Auth from '../utils/auth';
+// import Auth from '../utils/auth';
 
 const Contact = (props) => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
-  const [login, { error }] = useMutation(LOGIN_USER);
+  const [formState, setFormState] = useState({ email: '', userName: '', messageText: '' });
+  // const [login, { error }] = useMutation(LOGIN_USER);
+  const [addMessage, { error }] = useMutation(ADD_MESSAGE);
+
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -23,19 +26,30 @@ const Contact = (props) => {
     event.preventDefault();
 
     try {
-      const { data } = await login({
+      await addMessage({
         variables: { ...formState },
       });
 
-      Auth.login(data.login.token);
+      // Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
     }
 
+    // try {
+    //   const { data } = await login({
+    //     variables: { ...formState },
+    //   });
+
+    //   Auth.login(data.login.token);
+    // } catch (e) {
+    //   console.error(e);
+    // }
+
     // clear form values
     setFormState({
       email: '',
-      password: '',
+      userName: '',
+      messageText: ''
     });
   };
 
@@ -60,18 +74,26 @@ const Contact = (props) => {
               <input
                 className="form-input"
                 placeholder="Your name"
-                name="name"
-                type="name"
-                id="name"
-                value={formState.name}
+                name="userName"
+                type="text"
+                id="userName"
+                value={formState.userName}
                 onChange={handleChange}
+              />
+              <textarea 
+              placeholder="Your Message"
+              className="form-input"
+              name="messageText"
+              type="text"
+              value={formState.messageText} 
+              onChange={handleChange}
               />
               <button className="btn d-block w-100" type="submit">
                 Submit
               </button>
             </form>
 
-            {error && <div>Login failed</div>}
+            {error && <div>Message failed</div>}
           </div>
         </div>
       </div>

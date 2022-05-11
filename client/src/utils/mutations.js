@@ -1,5 +1,17 @@
 import { gql } from '@apollo/client';
 
+export const ADD_MESSAGE = gql`
+  mutation addMessage($userName: String, $email: String!, $messageText: String) {
+    addMessage(userName: $userName, email: $email, messageText: $messageText) {
+      _id
+      userName
+      email
+      messageText
+      createdAt
+    }
+  }
+`;
+
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
