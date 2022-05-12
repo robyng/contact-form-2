@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-// import { LOGIN_USER } from '../utils/mutations';
 import { ADD_MESSAGE } from "../utils/mutations";
-
-// import Auth from '../utils/auth';
 
 const Contact = (props) => {
   const [formState, setFormState] = useState({ email: '', userName: '', messageText: '' });
-  // const [login, { error }] = useMutation(LOGIN_USER);
+  // parameters for success, sending, and failed messages
   const [addMessage, { data, loading, error }] = useMutation(ADD_MESSAGE);
 
 
@@ -25,38 +22,27 @@ const Contact = (props) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    // add formState to db
     try {
       await addMessage({
         variables: { ...formState },
       });
-
-      // Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
-    }
+    };
 
-    // try {
-    //   const { data } = await login({
-    //     variables: { ...formState },
-    //   });
-
-    //   Auth.login(data.login.token);
-    // } catch (e) {
-    //   console.error(e);
-    // }
-
-    // clear form values
+    // clear formState values
     setFormState({
       email: '',
       userName: '',
       messageText: ''
     });
+
   };
 
   return (
     <main className=" justify-center mb-4">
-        <div>hi</div>
-        <h1 className='row'>Contact Us</h1>
+      <h1 className='row'>Contact Us</h1>
       <div className="flex-row col-12 col-md-6">
         <div className="card">
           <h4 className="card-header">How can we help?</h4>
@@ -80,13 +66,13 @@ const Contact = (props) => {
                 value={formState.userName}
                 onChange={handleChange}
               />
-              <textarea 
-              placeholder="Your Message"
-              className="form-input"
-              name="messageText"
-              type="text"
-              value={formState.messageText} 
-              onChange={handleChange}
+              <textarea
+                placeholder="Your Message"
+                className="form-input"
+                name="messageText"
+                type="text"
+                value={formState.messageText}
+                onChange={handleChange}
               />
               <button className="btn d-block w-100" type="submit">
                 Submit
