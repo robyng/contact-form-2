@@ -8,7 +8,7 @@ import { ADD_MESSAGE } from "../utils/mutations";
 const Contact = (props) => {
   const [formState, setFormState] = useState({ email: '', userName: '', messageText: '' });
   // const [login, { error }] = useMutation(LOGIN_USER);
-  const [addMessage, { error }] = useMutation(ADD_MESSAGE);
+  const [addMessage, { data, loading, error }] = useMutation(ADD_MESSAGE);
 
 
   // update state based on form input changes
@@ -92,8 +92,9 @@ const Contact = (props) => {
                 Submit
               </button>
             </form>
-
-            {error && <div>Message failed</div>}
+            {data && <div>Success!</div>}
+            {loading && <div>Sending...</div>}
+            {error && <div>Message failed. Try again?</div>}
           </div>
         </div>
       </div>
